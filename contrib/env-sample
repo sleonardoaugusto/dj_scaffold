@@ -1,0 +1,6 @@
+SECRET_KEY='secret'
+DEBUG=True
+ALLOWED_HOSTS=localhost
+
+#docker database connection
+#DATABASE_URL=postgres://postgres:postgres@db/dj_bank_dev
