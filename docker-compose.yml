@@ -1,0 +1,33 @@
+services:
+  app:
+    container_name: dj_bank_app
+    build: .
+    command: bash -c "python manage.py makemigrations
+      && python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./:/usr/src/dj_bank/
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    depends_on:
+      - db
+    restart: on-failure:10
+  db:
+    container_name: dj_bank_database
+    image: postgres:12.0-alpine
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'dj_bank_dev'
+
+volumes:
+  postgres_data:
+
